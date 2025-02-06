@@ -10,7 +10,9 @@ public class PairWiseTestGenerator {
     public static void generateTests(int numTests, int arraySize, String fileName) throws IOException {
         Random rand = new Random();
 
-        try (FileWriter fw = new FileWriter(fileName)) {
+        try (FileWriter fw = new FileWriter(fileName, true)) {
+            System.out.println("Pairwise: Generating " + numTests + " tests in " + fileName + "...");
+            fw.write("Generate Pairwise Number Tests\n");
             for (int test = 0; test < numTests; test++) {
                 int[] array = new int[arraySize];
                 for (int i = 0; i < arraySize; i++) {
@@ -19,13 +21,19 @@ public class PairWiseTestGenerator {
 
                 // Generate 0-pairs
                 fw.write("0-pairs\n");
+                int key = rand.nextInt(MAX_BOUND);
+                fw.write(key + "\n");
                 for (int i = 0; i < arraySize; i++) {
                     fw.write(array[i] + " ");
                 }
+
+
                 fw.write("\n\n");
 
                 // Generate 1-pairs
                 fw.write("1-pairs\n");
+                int key2 = rand.nextInt(MAX_BOUND);
+                fw.write(key2 + "\n");
                 for (int i = 0; i < arraySize; i++) {
                     int[] tempArray = Arrays.copyOf(array, arraySize);
                     tempArray[i] = rand.nextInt(MAX_BOUND);
@@ -38,6 +46,8 @@ public class PairWiseTestGenerator {
 
                 // Generate 2-pairs
                 fw.write("2-pairs\n");
+                int key3 = rand.nextInt(MAX_BOUND);
+                fw.write(key3 + "\n");
                 for (int i = 0; i < arraySize - 1; i++) {
                     for (int j = i + 1; j < arraySize; j++) {
                         int[] tempArray = Arrays.copyOf(array, arraySize);
@@ -49,6 +59,7 @@ public class PairWiseTestGenerator {
                         fw.write("\n");
                     }
                 }
+
                 fw.write("\n");
             }
         }
