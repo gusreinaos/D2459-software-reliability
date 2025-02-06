@@ -27,6 +27,7 @@ public class Main {
     public static void processLines(List<String> lines) {
         Integer key = null;
         boolean processingValues = false;
+        int testPassed = 0;
 
         for (int i = 0; i < lines.size(); i++) {
             String line = lines.get(i).trim();
@@ -50,38 +51,44 @@ public class Main {
                             .toArray();
                     boolean result = Original.MembershipQueryUnsorted.isMemberOfUnsorted(test, key);
                     System.out.println("isMember(" + Arrays.toString(test) + ", " + key + ") returned: " + result);
+                    testPassed++;
 
                     // run each mutant
-                    int[] mutantCheck = new int[6];
                     try{
                         boolean mutant1Result = Mutations.Mutation1.MembershipQueryUnsorted.isMemberOfUnsorted(test, key);
-                        mutantCheck[0]++;
+                        System.out.println("Mutant1: isMember(" + Arrays.toString(test) + ", " + key + ") returned: " + mutant1Result);
+                        testPassed++;
+
                         boolean mutant2Result = Mutations.Mutation2.MembershipQueryUnsorted.isMemberOfUnsorted(test, key);
-                        mutantCheck[1]++;
+                        System.out.println("Mutant2: isMember(" + Arrays.toString(test) + ", " + key + ") returned: " + mutant2Result);
+                        testPassed++;
+
                         boolean mutant3Result = Mutations.Mutation3.MembershipQueryUnsorted.isMemberOfUnsorted(test, key);
-                        mutantCheck[2]++;
+                        System.out.println("Mutant3: isMember(" + Arrays.toString(test) + ", " + key + ") returned: " + mutant3Result);
+                        testPassed++;
+
                         boolean mutant4Result = Mutations.Mutation4.MembershipQueryUnsorted.isMemberOfUnsorted(test, key);
-                        mutantCheck[3]++;
+                        System.out.println("Mutant4: isMember(" + Arrays.toString(test) + ", " + key + ") returned: " + mutant4Result);
+                        testPassed++;
+
                         boolean mutant5Result = Mutations.Mutation5.MembershipQueryUnsortedMutation1.isMemberOfUnsorted(test, key);
-                        mutantCheck[4]++;
+                        System.out.println("Mutant5: isMember(" + Arrays.toString(test) + ", " + key + ") returned: " + mutant5Result);
+                        testPassed++;
+
                         boolean mutant6Result = Mutations.Mutation6.MembershipQueryUnsortedMutation2.isMemberOfUnsorted(test, key);
-                        mutantCheck[5]++;
+                        System.out.println("Mutant6: isMember(" + Arrays.toString(test) + ", " + key + ") returned: " + mutant6Result);
+                        testPassed++;
 
-                        System.out.println("Test: " + line + " resulted in " + Arrays.toString(mutantCheck));
-
-//                        System.out.println("Mutant1: isMember(" + Arrays.toString(test) + ", " + key + ") returned: " + mutant1Result);
-//                        System.out.println("Mutant2: isMember(" + Arrays.toString(test) + ", " + key + ") returned: " + mutant2Result);
-//                        System.out.println("Mutant3: isMember(" + Arrays.toString(test) + ", " + key + ") returned: " + mutant3Result);
-//                        System.out.println("Mutant4: isMember(" + Arrays.toString(test) + ", " + key + ") returned: " + mutant4Result);
-//                        System.out.println("Mutant5: isMember(" + Arrays.toString(test) + ", " + key + ") returned: " + mutant5Result);
-//                        System.out.println("Mutant6: isMember(" + Arrays.toString(test) + ", " + key + ") returned: " + mutant6Result);
                     } catch (Exception e) {
                         System.err.println("Error: " + e.getMessage() + " at line: " + lines.get(i) + " at " + e.fillInStackTrace());
+                        System.out.println("\n------------------------------------------");
+                        System.out.println("Tests passed: " + testPassed);
+
+                        System.out.println("↓ Error Below ↓");
                         throw new RuntimeException("Error parsing test values: " + line);
                     }
                 } catch (NumberFormatException e) {
                     System.err.println("Error parsing test values: " + line);
-                    throw new RuntimeException("Error parsing test values: " + line);
                 }
             }
             // If an empty line is encountered, reset the key
@@ -90,5 +97,8 @@ public class Main {
                 processingValues = false;
             }
         }
+
+        System.out.println("\n------------------------------------------");
+        System.out.println("Tests passed (no crashes): " + testPassed);
     }
 }
