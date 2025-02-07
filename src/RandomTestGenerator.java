@@ -5,7 +5,7 @@ import java.util.Random;
 
 public class RandomTestGenerator {
 
-    public static final int MAX_BOUND = 100;
+    public static final int MAX_BOUND = 10;
 
     public static void generateTests(int numTests, int arraySize, String filename) throws IOException {
         Random rand = new Random();
