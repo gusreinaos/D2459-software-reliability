@@ -1,3 +1,5 @@
+package src;
+
 public class TestOracle {
     public static boolean checkSortPrecondition(int[] array) {
         return array.length > 1;
